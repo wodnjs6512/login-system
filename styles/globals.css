@@ -1,16 +1,72 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: 'Gugi', cursive;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input {
+    width: 100%;
+}
+
+form {
+    margin: 0 10%;
+}
+
+input[type='submit'] {
+    height: 40px;
+    border: none;
+    box-shadow: 10px 5px 5px Aquamarine;
+}
+
+input[type='text'] {
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    border-bottom: solid rgb(127, 255, 212, 0.5) 1.5px;
+    margin: 10px 0;
+}
+
+input[type='password'] {
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    border-bottom: solid rgb(127, 255, 212, 0.5) 1.5px;
+    margin: 10px 0;
+}
+
+input[type='checkbox'] {
+    width: unset;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    border-bottom: solid rgb(127, 255, 212, 0.5) 1.5px;
+    margin: 10px 0;
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+form {
+    padding: 10px;
+}
+
+form div {
+    padding: 10px;
 }

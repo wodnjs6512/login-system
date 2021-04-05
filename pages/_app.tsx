@@ -17,6 +17,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                 <Head>
                     <title>Login-system</title>
                     <link rel="icon" href="/favicon.ico" />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" />
+                    <link
+                        href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
+                        rel="stylesheet"
+                    ></link>
                 </Head>
                 <Gnb />
                 <ContentWrapper>
@@ -35,11 +40,21 @@ const PageLayout = styled.div`
     height: max-content;
     > div {
         display: flex;
+        width: 100%;
+        position: relative;
     }
 `;
 
 const ContentWrapper = styled.div`
     min-height: calc(100vh - 160px);
+    width: 100%;
+    flex: 1 0 auto;
+    > div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex: 1 0 auto;
+    }
 `;
 
 export default MyApp;

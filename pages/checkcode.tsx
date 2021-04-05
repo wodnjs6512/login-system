@@ -1,5 +1,14 @@
-import React, { useCallback, useRef, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+    useCallback,
+    useRef,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+    FormEvent,
+} from 'react';
 import Router from 'next/router';
+import styled from '@emotion/styled';
 
 // @ts-ignore babel alias error
 import { Context, RESET_STATE, UPDATE_STATE } from '@reducers';
@@ -13,15 +22,19 @@ import fetcher from '@utils/fetcher';
 
 let interval = 0;
 const CheckCode = () => {
-    const inputEl = useRef(null);
+    const codeRef = useRef(null);
     const { store, dispatch } = useContext(Context);
     const [timeLeft, setTimeLeft] = useState({ minute: 0, second: 0 });
     const [timer, setTimer] = useState(null);
     const { remainMillisecond, email } = store;
     useEffect(() => {
         if (!remainMillisecond || !email) {
+            dispatch({
+                type: RESET_STATE,
+            });
             Router.push('/');
         }
+        updateTime();
     }, []);
 
     useEffect(() => {
@@ -32,11 +45,14 @@ const CheckCode = () => {
         };
     }, []);
 
-    const updateTime = async () => {
+    const updateTime = async (): Promise<any> => {
         const currentTime = new Date().getTime();
         const expireTime = new Date(remainMillisecond).getTime();
         const currentTimeLeft = Math.floor((expireTime - currentTime) / 1000);
         if (currentTimeLeft < 0) {
+            dispatch({
+                type: RESET_STATE,
+            });
             location.href = '/';
             return;
         } else {
@@ -47,9 +63,10 @@ const CheckCode = () => {
         }
     };
 
-    const verifyCode = useCallback(async () => {
+    const verifyCode = useCallback(async (e: FormEvent): Promise<any> => {
+        e.preventDefault();
         try {
-            const issueToken = inputEl.current.value;
+            const issueToken = codeRef.current.value;
             const result = await fetcher({
                 url: `/api/reset-password`,
                 method: 'POST',
@@ -77,12 +94,25 @@ const CheckCode = () => {
 
     return (
         <div>
-            <div>인증 코드 검증 페이지</div>
-            <input ref={inputEl} type="text" />
+            <h1>인증 코드 검증 페이지</h1>
+            <form onSubmit={verifyCode}>
+                <div className="row">
+                    <input ref={codeRef} type="text" placeholder="인증코드 입력" />
+                    <Timer>
+                        {timeLeft.minute}:{timeLeft.second}
+                    </Timer>
+                </div>
+
+                <input type="submit" value="제출" />
+            </form>
             <br />
-            {timeLeft.minute}분{timeLeft.second}초<button onClick={verifyCode}>코드 전송</button>
         </div>
     );
 };
+
+const Timer = styled.p`
+    width: 100px;
+    text-align: center;
+`;
 
 export default CheckCode;
