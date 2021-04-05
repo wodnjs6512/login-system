@@ -25,29 +25,26 @@ const Index = () => {
     const sendEmail = useCallback(
         async (e) => {
             try {
-                const emailUsed = inputEl.current.value;
-                if (!isEmailValid(emailUsed)) {
+                const email = inputEl.current.value;
+                if (!isEmailValid(email)) {
                     return alert('올바르지 않은 이메일입니다.');
                 }
                 const result = await fetcher({
-                    url: `/api/reset-password?email=${emailUsed}`,
+                    url: `/api/reset-password?email=${email}`,
                 });
-                if (result?.error) {
-                    throw new Error(result?.error?.message);
-                }
 
                 const { issueToken, remainMillisecond } = result;
                 dispatch({
                     type: UPDATE_STATE,
                     payload: {
-                        emailUsed,
+                        email,
                         remainMillisecond,
                     },
                 });
                 await alert(`개발용 노티 : ${issueToken}`);
                 Router.push('/checkcode');
             } catch (err) {
-                alert(err.message || '서버 에러입니다.');
+                alert(err.message || '알수 없는 에러');
             }
         },
         [inputEl]

@@ -3,32 +3,28 @@ import produce from 'immer';
 
 export const initialState = {
     remainMillisecond: null,
-    emailUsed: null,
-    verifiedWithCode: false,
+    email: null,
+    confirmToken: false,
 };
 
 export const UPDATE_STATE = 'codeinfo/update';
 export const RESET_STATE = 'codeinfo/reset';
-export const VERIFIED = 'codeinfo/verified';
 
 export const reducer = (state, action) => {
     const { type, value } = action;
     switch (type) {
         case UPDATE_STATE:
-            const { remainMillisecond, emailUsed, verifiedWithCode } = action.payload;
+            const { remainMillisecond, email, confirmToken } = action.payload;
             return produce(state, (draft) => {
                 if (remainMillisecond) {
                     draft.remainMillisecond = new Date(new Date().getTime() + remainMillisecond);
                 }
-                if (emailUsed) {
-                    draft.emailUsed = emailUsed;
+                if (email) {
+                    draft.email = email;
                 }
-                draft.verifiedWithCode = false;
-            });
-        case VERIFIED:
-            return produce(state, (draft) => {
-                draft.remainMillisecond = null;
-                draft.verifiedWithCode = true;
+                if (confirmToken) {
+                    draft.confirmToken = confirmToken;
+                }
             });
 
         case RESET_STATE:

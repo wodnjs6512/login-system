@@ -4,8 +4,10 @@ import Gnb from '../components/modules/Gnb';
 import Footer from '../components/modules/Footer';
 import '../styles/globals.css';
 import styled from '@emotion/styled';
-import { reducer, Context, initialState } from '@reducers';
 import type { AppProps /*, AppContext */ } from 'next/app';
+
+// @ts-ignore babel alias error
+import { reducer, Context, initialState } from '@reducers';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     const [store, dispatch] = useReducer(reducer, initialState);
