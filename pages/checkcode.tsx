@@ -30,21 +30,21 @@ const CheckCode = () => {
         };
     }, []);
 
-    const updateTime = useCallback(async () => {
+    const updateTime = async () => {
         const currentTime = new Date().getTime();
         const expireTime = new Date(remainMillisecond).getTime();
         const currentTimeLeft = Math.floor((expireTime - currentTime) / 1000);
-        if (currentTimeLeft < 0) {
+        if (currentTimeLeft < 180) {
+            dispatch({
+                type: RESET_STATE,
+            });
             clearInterval(timer);
-            if (confirm('시간이 지났습니다.')) {
-                dispatch({
-                    type: RESET_STATE,
-                });
-                location.href = '/';
-            }
+            await alert('시간이 지났습니다.');
+            location.href = '/';
+            return;
         }
         setTimeLeft({ minute: Math.floor(currentTimeLeft / 60), second: currentTimeLeft % 60 });
-    }, []);
+    };
 
     const verifyCode = useCallback(async () => {
         try {
