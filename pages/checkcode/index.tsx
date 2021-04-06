@@ -20,7 +20,6 @@ import fetcher from '@utils/fetcher';
  * 인증 코드 검증 페이지
  * */
 
-let interval = 0;
 const CheckCode = () => {
     const codeRef = useRef(null);
     const { store, dispatch } = useContext(Context);
@@ -45,7 +44,7 @@ const CheckCode = () => {
         };
     }, []);
 
-    const updateTime = async (): Promise<any> => {
+    const updateTime = useCallback(async (): Promise<any> => {
         const currentTime = new Date().getTime();
         const expireTime = new Date(remainMillisecond).getTime();
         const currentTimeLeft = Math.floor((expireTime - currentTime) / 1000);
@@ -61,7 +60,7 @@ const CheckCode = () => {
                 second: currentTimeLeft % 60,
             });
         }
-    };
+    }, [remainMillisecond]);
 
     const verifyCode = useCallback(async (e: FormEvent): Promise<any> => {
         e.preventDefault();
@@ -87,7 +86,6 @@ const CheckCode = () => {
             await alert(`인증 완료 되었습니다.`);
             Router.push('/changepw');
         } catch (err) {
-            console.log(err);
             alert(err.message || '알수 없는 에러');
         }
     }, []);

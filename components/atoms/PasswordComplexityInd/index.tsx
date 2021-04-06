@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { AppProps } from 'next/dist/next-server/lib/router/router';
+import type { AppProps /*, AppContext */ } from 'next/app';
 const PasswordComplexityInd = (props: AppProps & { strength: number }) => {
     return (
         <ComplexityIndWrapper strength={props.strength} className="row">

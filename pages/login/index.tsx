@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, useRef, FormEvent } from 'react';
+import styled from '@emotion/styled';
 // @ts-ignore babel alias error
 import fetcher from '@utils/fetcher';
 // @ts-ignore babel alias error
@@ -11,16 +12,26 @@ import Router from 'next/router';
  * 로그인 페이지
  * */
 const Login = () => {
-    const [cookies, setCookie] = useCookies(['cookie-name']);
+    const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
 
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const rememberMeRef = useRef(null);
     useEffect(() => {
-        if (emailRef && cookies.rememberMe) {
-            emailRef.current.value = cookies.rememberMe;
+        if (cookies.rememberMe) {
+            if (emailRef) {
+                emailRef.current.value = cookies.rememberMe;
+            }
+            if (rememberMeRef) {
+                rememberMeRef.current.checked = cookies.rememberMe ? true : false;
+            }
         }
-    }, [cookies.rememberMe, emailRef]);
+    }, [cookies.rememberMe, emailRef, rememberMeRef]);
+
+    const toResetPassword = useCallback(() => {
+        Router.push('/');
+    }, []);
+
     const tryLogin = useCallback(async (e: FormEvent): Promise<any> => {
         e.preventDefault();
         const email = emailRef.current.value;
@@ -40,15 +51,17 @@ const Login = () => {
                     password,
                 },
             });
-
             const cookieOptions = {
                 secure: true,
-                httpOnly: true,
+                // 로컬 호스트가 아니라면 httpOnly 옵션을 키고 쓰는것이 보안에서 유리
+                // httpOnly: true,
                 maxAge: 1000 * 60 * 60 * 24, // 계속 로그인 유지 할 경우 이와 같은 방식으로
                 // 만약 세션으로 유지하려면 unset
             };
             if (rememberMe) {
                 setCookie('rememberMe', email, cookieOptions);
+            } else {
+                removeCookie('rememberMe');
             }
             setCookie('Authorization', `Bearer ${accessToken}`, cookieOptions);
 
@@ -66,12 +79,28 @@ const Login = () => {
                 <input ref={emailRef} type="text" placeholder="이메일을 입력해 주세요" />
                 <input ref={passwordRef} type="password" placeholder="비밀번호를 입력해 주세요" />
                 <div className="row">
-                    <input ref={rememberMeRef} type="checkbox" checked={cookies.rememberMe} />
-                    <p>아이디 저장</p>
+                    <SubMenuCell htmlFor={'rememberMe'}>
+                        <input id="rememberMe" ref={rememberMeRef} type="checkbox" />
+                        <p>아이디 저장</p>
+                    </SubMenuCell>
+                    <SubMenuCell>
+                        <a onClick={toResetPassword}>비밀번호 재설정</a>
+                    </SubMenuCell>
                 </div>
                 <input type="submit" value="로그인" />
             </form>
         </div>
     );
 };
+
+const SubMenuCell = styled.label`
+    display: flex;
+    a {
+        cursor: pointer;
+        margin: auto 5px;
+    }
+    p {
+        margin: auto 5px;
+    }
+`;
 export default Login;

@@ -64,7 +64,6 @@ const Index = () => {
             });
             Router.push('/');
         } catch (err) {
-            console.log(err);
             alert(err.message || '알수 없는 에러');
         }
     }, []);

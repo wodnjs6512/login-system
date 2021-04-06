@@ -1,12 +1,10 @@
 import React, { useCallback, useRef, useContext, FormEvent } from 'react';
 import styled from '@emotion/styled';
 import Router from 'next/router';
-// @ts-ignore babel alias error
-import fetcher from '@utils/fetcher';
-// @ts-ignore babel alias error
-import { Context, UPDATE_STATE } from '@reducers';
-// @ts-ignore babel alias error
-import emailValidator from '@utils/emailValidator';
+import { Context, UPDATE_STATE } from '../../reducers';
+
+import fetcher from '../../utils/fetcher';
+import emailValidator from '../../utils/emailValidator';
 /**
  * 인증코드 발급 페이지
  * */
@@ -23,6 +21,7 @@ const Index = () => {
             }
             const result = await fetcher({
                 url: `/api/reset-password?email=${email}`,
+                method: 'GET',
             });
 
             const { issueToken, remainMillisecond } = result;

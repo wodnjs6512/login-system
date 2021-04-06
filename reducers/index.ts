@@ -1,11 +1,7 @@
 import React from 'react';
 import produce from 'immer';
 
-export const initialState = {
-    remainMillisecond: null,
-    email: null,
-    confirmToken: false,
-};
+export const initialState = {} as IContextData;
 
 export const UPDATE_STATE = 'codeinfo/update';
 export const RESET_STATE = 'codeinfo/reset';
@@ -36,4 +32,4 @@ export const reducer = (state, action) => {
     }
 };
 
-export const Context = React.createContext('globalState');
+export const Context = React.createContext(initialState);

@@ -10,14 +10,7 @@ const fetcher = async ({
     const domain = process.env.SERVER_DOMAIN;
 
     Object.assign(headers, additionalHeaders);
-    // Authorization: `bearer ${JWT}`,
-    console.log({
-        method,
-        mode: 'cors',
-        headers,
-        credentials: 'same-origin',
-        body: JSON.stringify(body),
-    });
+
     return await fetch(domain + url, {
         method,
         mode: 'cors',
@@ -26,7 +19,6 @@ const fetcher = async ({
         body: JSON.stringify(body),
     }).then(async (r) => {
         const status = r.status;
-        console.log(r);
         if (status === 400) {
             throw new Error('잘못된 요청입니다.');
         } else if (status === 401) {

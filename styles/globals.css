@@ -22,6 +22,15 @@ form {
     margin: 0 10%;
 }
 
+h1 {
+    width: 100%;
+    text-align: center;
+}
+
+h3 {
+    margin: 0;
+}
+
 input[type='submit'] {
     height: 40px;
     border: none;
@@ -51,11 +60,6 @@ input[type='checkbox'] {
     border: none;
     border-bottom: solid rgb(127, 255, 212, 0.5) 1.5px;
     margin: 10px 0;
-}
-
-h1 {
-    width: 100%;
-    text-align: center;
 }
 
 .row {

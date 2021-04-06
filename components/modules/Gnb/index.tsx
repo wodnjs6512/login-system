@@ -150,7 +150,7 @@ const Logo = styled.div`
 const NavItem = styled.div`
     display: flex;
     flex: 1;
-    align-items: center;
+    margin: 0 auto;
     text-align: center;
     a {
         flex: 1;
