@@ -5,6 +5,7 @@ module.exports = {
                 'next/babel',
                 '@emotion/babel-preset-css-prop',
                 ['@babel/preset-env', { targets: { node: 'current' } }],
+                '@babel/preset-react',
             ],
             plugins: [
                 ['@emotion'],
@@ -22,7 +23,7 @@ module.exports = {
             ],
         },
         production: {
-            presets: ['next/babel', '@emotion/babel-preset-css-prop'],
+            presets: ['next/babel', '@emotion/babel-preset-css-prop', '@babel/preset-react'],
             plugins: [
                 ['@emotion'],
                 [
@@ -39,7 +40,12 @@ module.exports = {
             ],
         },
         test: {
-            presets: ['next/babel', '@emotion/babel-preset-css-prop'],
+            presets: [
+                'next/babel',
+                '@emotion/babel-preset-css-prop',
+                ['@babel/preset-env', { targets: { node: 'current' } }],
+                '@babel/preset-react',
+            ],
             plugins: [
                 ['@emotion'],
                 [

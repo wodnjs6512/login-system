@@ -12,7 +12,7 @@ import { reducer, Context, initialState } from '@reducers';
 const MyApp = ({ Component, pageProps }: AppProps) => {
     const [store, dispatch] = useReducer(reducer, initialState);
     return (
-        <Context.Provider value={{ store, dispatch } as MyContextType}>
+        <Context.Provider value={{ store, dispatch }}>
             <PageLayout>
                 <Head>
                     <title>Login-system</title>
