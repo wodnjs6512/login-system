@@ -6,14 +6,19 @@ export const initialState = {} as IContextData;
 export const UPDATE_STATE = 'codeinfo/update';
 export const RESET_STATE = 'codeinfo/reset';
 
-export const reducer = (state, action) => {
-    const { type, value } = action;
+type Actions =
+    | { type: 'codeinfo/update'; payload: IContextDataInput }
+    | { type: 'codeinfo/reset'; payload: IContextDataInput };
+
+export const reducer = (state: IContextData, action: Actions) => {
+    const { type } = action;
     switch (type) {
         case UPDATE_STATE:
             const { remainMillisecond, email, confirmToken } = action.payload;
             return produce(state, (draft) => {
                 if (remainMillisecond) {
-                    draft.remainMillisecond = new Date(new Date().getTime() + remainMillisecond);
+                    const now = new Date().getTime();
+                    draft.remainMillisecond = new Date(now + remainMillisecond);
                 }
                 if (email) {
                     draft.email = email;

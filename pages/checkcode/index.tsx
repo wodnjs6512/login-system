@@ -1,20 +1,8 @@
-import React, {
-    useCallback,
-    useRef,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-    FormEvent,
-} from 'react';
-import Router from 'next/router';
+import React, { useCallback, useRef, useContext, useEffect, useState, FormEvent } from 'react';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-
-// @ts-ignore babel alias error
-import { Context, RESET_STATE, UPDATE_STATE } from '@reducers';
-
-// @ts-ignore babel alias error
-import fetcher from '@utils/fetcher';
+import { Context, RESET_STATE, UPDATE_STATE } from '../../reducers';
+import fetcher from '../../utils/fetcher';
 
 /**
  * 인증 코드 검증 페이지
@@ -22,16 +10,21 @@ import fetcher from '@utils/fetcher';
 
 const CheckCode = () => {
     const codeRef = useRef(null);
-    const { store, dispatch } = useContext(Context);
+    const { store, dispatch = () => {} } = useContext(Context);
     const [timeLeft, setTimeLeft] = useState({ minute: 0, second: 0 });
     const [timer, setTimer] = useState(null);
-    const { remainMillisecond, email } = store;
+    const router = useRouter();
+    const { remainMillisecond, email } = store || {};
     useEffect(() => {
         if (!remainMillisecond || !email) {
             dispatch({
                 type: RESET_STATE,
             });
-            Router.push('/');
+            if (router) {
+                router.push('/');
+            } else {
+                location.href = '/';
+            }
         }
         updateTime();
     }, []);
@@ -52,7 +45,12 @@ const CheckCode = () => {
             dispatch({
                 type: RESET_STATE,
             });
-            location.href = '/';
+            if (router) {
+                router.push('/');
+            } else {
+                location.href = '/';
+            }
+
             return;
         } else {
             setTimeLeft({
@@ -84,7 +82,7 @@ const CheckCode = () => {
                 },
             });
             await alert(`인증 완료 되었습니다.`);
-            Router.push('/changepw');
+            router.push('/changepw');
         } catch (err) {
             alert(err.message || '알수 없는 에러');
         }

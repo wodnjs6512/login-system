@@ -1,12 +1,10 @@
 import React, { useEffect, useCallback, useRef, FormEvent } from 'react';
 import styled from '@emotion/styled';
-// @ts-ignore babel alias error
-import fetcher from '@utils/fetcher';
-// @ts-ignore babel alias error
-import emailValidator from '@utils/emailValidator';
-
 import { useCookies } from 'react-cookie';
 import Router from 'next/router';
+
+import fetcher from '../../utils/fetcher';
+import emailValidator from '../../utils/emailValidator';
 
 /**
  * 로그인 페이지
@@ -80,14 +78,19 @@ const Login = () => {
                 <input ref={passwordRef} type="password" placeholder="비밀번호를 입력해 주세요" />
                 <div className="row">
                     <SubMenuCell htmlFor={'rememberMe'}>
-                        <input id="rememberMe" ref={rememberMeRef} type="checkbox" />
+                        <input
+                            id="rememberMe"
+                            data-testid="checkbox"
+                            ref={rememberMeRef}
+                            type="checkbox"
+                        />
                         <p>아이디 저장</p>
                     </SubMenuCell>
                     <SubMenuCell>
                         <a onClick={toResetPassword}>비밀번호 재설정</a>
                     </SubMenuCell>
                 </div>
-                <input type="submit" value="로그인" />
+                <input type="submit" value="로그인" data-testid="loginButton" />
             </form>
         </div>
     );

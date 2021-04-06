@@ -1,13 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
 import styled from '@emotion/styled';
-import Router from 'next/router';
 import { useCookies } from 'react-cookie';
+import type { AppProps } from 'next/app';
 
-// @ts-ignore babel alias error
-import fetcher from '@utils/fetcher';
-// @ts-ignore babel alias error
-import cookieParser from '@utils/cookieParser';
-import type { AppProps /*, AppContext */ } from 'next/app';
+import fetcher from '../../utils/fetcher';
+import cookieParser from '../../utils/cookieParser';
 
 /**
  * 회원 정보 조회
@@ -19,10 +16,7 @@ const UserInfo = ({ data }) => {
             location.href = '/';
         }
     }, []);
-    // 여기는 나중에 React.Suspense와 같은 부분이 생기면 처리 가능
-    if (!data) {
-        return <div>로딩중</div>;
-    }
+
     return (
         <div>
             <h1>회원 정보 조회</h1>
@@ -39,24 +33,29 @@ const CardItem = (props: { profileData: IProfileData }) => {
 
     const logout = useCallback(async () => {
         // ably452@dummy.com
-        const result = await fetcher({
-            url: '/api/logout',
-            method: 'POST',
-            additionalHeaders: { Authorization: cookies.Authorization },
-        });
+        try {
+            const result = await fetcher({
+                url: '/api/logout',
+                method: 'POST',
+                additionalHeaders: { Authorization: cookies.Authorization },
+            });
+        } catch (err) {
+            alert('로그아웃에 실패했습니다');
+        }
+
         removeCookie('Authorization');
         location.href = '/';
     }, []);
 
     return (
         <CardItemWrapper>
-            <div id="profileImage">
-                <img src={profileImage} />
+            <div id="profileImage" data-testid="profileImage">
+                <img src={profileImage} alt={`alt_${name}`} />
             </div>
-            <h3>
+            <h3 data-testid="username">
                 <p>닉네임 : {name}</p>
             </h3>
-            <h3>
+            <h3 data-testid="useremail">
                 <p>이메일 : {email}</p>
             </h3>
             <button onClick={logout}>로그아웃</button>

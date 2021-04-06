@@ -1,28 +1,24 @@
 import React, { useContext, useRef, useCallback, useState, useEffect, FormEvent } from 'react';
 import Router from 'next/router';
-// @ts-ignore babel alias error
-import { Context, RESET_STATE, VERIFIED } from '@reducers';
-// @ts-ignore babel alias error
-import fetcher from '@utils/fetcher';
-// @ts-ignore babel alias error
-import passwordStrengthChekcer from '@utils/passwordStrengthChecker';
-// @ts-ignore babel alias error
-import PasswordComplexityInd from '@components/atoms/PasswordComplexityInd';
+import { Context, RESET_STATE } from '../../reducers';
+import fetcher from '../../utils/fetcher';
+import passwordStrengthChekcer from '../../utils/passwordStrengthChecker';
+import PasswordComplexityInd from '../../components/atoms/PasswordComplexityInd';
 /**
  * 비밀번호 변경 페이지
  * */
 const Index = () => {
-    const { store, dispatch } = useContext(Context);
-    const { email, confirmToken } = store;
+    const { store, dispatch = () => {} } = useContext(Context);
+    const { email, confirmToken } = store || {};
     const [emailStrength, setEmailStrength] = useState(null);
     const password = useRef(null);
     const passwordConfirm = useRef(null);
     useEffect(() => {
         if (!confirmToken || !email) {
-            // dispatch({
-            //     type: RESET_STATE,
-            // });
-            // location.href = '/';
+            dispatch({
+                type: RESET_STATE,
+            });
+            location.href = '/';
         }
     }, []);
 

@@ -1,7 +1,7 @@
 declare type IFetchObject = {
     url: string;
     method: string;
-    body?: BodyInit;
+    body?: BodyInit & Object<any>;
     options?: object;
     additionalHeaders?: object;
 };
@@ -27,9 +27,15 @@ type IUserData = {
 };
 
 interface IContextData {
-    remainMillisecond?: Date;
     email?: string;
     confirmToken?: string;
-    state: reducerState;
+    remainMillisecond?: Date;
+    store: reducerState & Object<any>;
     dispatch: Dispatch<ReducerAction<typeof reducer>>;
+}
+
+interface IContextDataInput {
+    email?: string;
+    confirmToken?: string;
+    remainMillisecond?: number;
 }

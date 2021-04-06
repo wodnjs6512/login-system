@@ -6,8 +6,7 @@ import '../styles/globals.css';
 import styled from '@emotion/styled';
 import type { AppProps /*, AppContext */ } from 'next/app';
 
-// @ts-ignore babel alias error
-import { reducer, Context, initialState } from '@reducers';
+import { reducer, Context, initialState } from '../reducers';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     const [store, dispatch] = useReducer(reducer, initialState);

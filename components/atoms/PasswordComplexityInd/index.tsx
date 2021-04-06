@@ -1,6 +1,7 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import type { AppProps /*, AppContext */ } from 'next/app';
-const PasswordComplexityInd = (props: AppProps & { strength: number }) => {
+const PasswordComplexityInd = (props) => {
     return (
         <ComplexityIndWrapper strength={props.strength} className="row">
             비밀번호 강도 : <ComplexityCell />
@@ -15,16 +16,16 @@ const ComplexityIndWrapper = styled.div<CustomHTMLElement>`
         background-color: rgba(40, 40, 40, 0.3);
         border-radius: 3px;
     }
-    div:nth-child(1) {
+    div:nth-of-type(1) {
         ${(props) => props.strength > 0 && 'background-color:orange;'}
         ${(props) => props.strength > 1 && 'background-color:yellow;'}
         ${(props) => props.strength > 2 && 'background-color:green;'}
     }
-    div:nth-child(2) {
+    div:nth-of-type(2) {
         ${(props) => props.strength > 1 && 'background-color:yellow;'}
         ${(props) => props.strength > 2 && 'background-color:green;'}
     }
-    div:nth-child(3) {
+    div:nth-of-type(3) {
         ${(props) => props.strength > 2 && 'background-color:green'}
     }
 `;
