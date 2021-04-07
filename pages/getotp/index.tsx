@@ -5,6 +5,7 @@ import { Context, UPDATE_STATE } from '../../reducers';
 
 import fetcher from '../../utils/fetcher';
 import emailValidator from '../../utils/emailValidator';
+
 /**
  * 인증코드 발급 페이지
  * */

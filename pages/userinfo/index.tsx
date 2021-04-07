@@ -8,9 +8,9 @@ import cookieParser from '../../utils/cookieParser';
 
 /**
  * 회원 정보 조회
- * 페이지 1로 사용합니다.
  * */
-const UserInfo = ({ data }) => {
+const UserInfo = (props: AppProps & { data: IProfileData }) => {
+    const data: IProfileData = props.data;
     useEffect(() => {
         if (!data && confirm('로그인해주세요')) {
             location.href = '/';

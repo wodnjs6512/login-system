@@ -7,7 +7,6 @@ import fetcher from '../../utils/fetcher';
 /**
  * 인증 코드 검증 페이지
  * */
-
 const CheckCode = () => {
     const codeRef = useRef(null);
     const { store, dispatch = () => {} } = useContext(Context);
